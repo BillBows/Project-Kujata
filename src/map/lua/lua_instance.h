@@ -55,6 +55,7 @@ public:
     int32 getWipeTime(lua_State*);
     int32 getEntity(lua_State*);
     int32 getStage(lua_State*);
+    int32 getLevelCap(lua_State*);
 
     int32 setLevelCap(lua_State*);
     int32 setLastTimeUpdate(lua_State*);

@@ -13213,6 +13213,7 @@ inline int32 CLuaBaseEntity::setMobLevel(lua_State *L)
     if (auto PMob = dynamic_cast<CMobEntity*>(m_PBaseEntity))
     {
         PMob->SetMLevel((uint8)lua_tointeger(L, 1));
+        PMob->SetSLevel((uint8)lua_tointeger(L, 1)/2);
         mobutils::CalculateStats(PMob);
         mobutils::GetAvailableSpells(PMob);
     }

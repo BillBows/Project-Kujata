@@ -274,6 +274,15 @@ inline int32 CLuaInstance::getStage(lua_State* L)
     return 1;
 }
 
+inline int32 CLuaInstance::getLevelCap(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaInstance == nullptr);
+
+    lua_pushinteger(L, m_PLuaInstance->GetLevelCap());
+
+    return 1;
+}
+
 inline int32 CLuaInstance::setLevelCap(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PLuaInstance == nullptr);
@@ -397,6 +406,7 @@ const char CLuaInstance::className[] = "CInstance";
 Lunar<CLuaInstance>::Register_t CLuaInstance::methods[] =
 {
     LUNAR_DECLARE_METHOD(CLuaInstance, getID),
+    LUNAR_DECLARE_METHOD(CLuaInstance, getLevelCap),
     LUNAR_DECLARE_METHOD(CLuaInstance, setLevelCap),
     LUNAR_DECLARE_METHOD(CLuaInstance, getAllies),
     LUNAR_DECLARE_METHOD(CLuaInstance, getChars),
