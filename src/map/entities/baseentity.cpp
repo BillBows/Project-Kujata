@@ -163,3 +163,7 @@ uint16 CBaseEntity::GetModelId()
 {
     return look.modelid;
 }
+
+bool CBaseEntity::IsTargetable() {
+    return (namevis & FLAG_UNTARGETABLE) == 0;
+}

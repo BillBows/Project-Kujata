@@ -304,10 +304,10 @@ end
 
 tpz.assault.instance.onInstanceCreated = function(instance, npcs)
     if npcs then
-        for id, npc in pairs(npcs) do
+        for id, pos in pairs(npcs) do
             local entity = instance:getEntity(bit.band(id, 0xFFF), tpz.objType.NPC)
 
-            entity:setPos(npc.x, npc.y, npc.z, npc.rot)
+            entity:setPos(pos.x, pos.y, pos.z, pos.rot)
         end
     end
 end
@@ -315,8 +315,8 @@ end
 tpz.assault.instance.onInstanceFailure = function(instance, csid)
     local mobs = instance:getMobs()
 
-    for _,v in pairs(mobs) do
-        local mobID = v:getID()
+    for _, mob in pairs(mobs) do
+        local mobID = mob:getID()
 
         DespawnMob(mobID, instance)
     end
@@ -337,7 +337,7 @@ tpz.assault.instance.onInstanceComplete = function(instance, X, Z, npcs)
     end
 
     if npcs then
-        for id, npc in pairs(npcs) do
+        for id, pos in pairs(npcs) do
             local entity = instance:getEntity(bit.band(id, 0xFFF), tpz.objType.NPC)
 
             entity:setStatus(tpz.status.NORMAL)
@@ -358,6 +358,8 @@ end
 
 -- ------------------------------------------------------------------------------------------------
 -- Zone
+
+tpz.assault.zone = {}
 
 tpz.assault.zone.onInstanceZoneIn = function(player, instance)
     local pos = player:getPos()

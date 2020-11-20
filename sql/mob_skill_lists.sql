@@ -777,11 +777,12 @@ INSERT INTO `mob_skill_lists` VALUES ('MamoolJa',176,1732);
 INSERT INTO `mob_skill_lists` VALUES ('MamoolJa',176,1733);
 INSERT INTO `mob_skill_lists` VALUES ('MamoolJa',176,1734);
 -- INSERT INTO `mob_skill_lists` VALUES ('MamoolJa',176,1735);
--- INSERT INTO `mob_skill_lists` VALUES ('MamoolJa',176,1736);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJa',176,1736);          -- Axe Throw
 -- INSERT INTO `mob_skill_lists` VALUES ('MamoolJa',176,1737);
 -- INSERT INTO `mob_skill_lists` VALUES ('MamoolJa',176,1738);
 -- INSERT INTO `mob_skill_lists` VALUES ('MamoolJa',176,1839);
 -- INSERT INTO `mob_skill_lists` VALUES ('MamoolJa',176,1840);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJa',176,1925);          -- Stave Toss
 -- 177: MamoolJa Knight?
 INSERT INTO `mob_skill_lists` VALUES ('Mandragora',178,300);
 INSERT INTO `mob_skill_lists` VALUES ('Mandragora',178,301);

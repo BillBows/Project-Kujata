@@ -4607,4 +4607,43 @@ namespace luautils
         }
     }
 
+    /************************************************************************
+    * Triggers before mob weapon skill is used providing the initial target *
+    * and supports changing the target.                                     *
+    * function onMobSkillTarget(target, mob, skill)                         *
+    ************************************************************************/
+
+    CBattleEntity* OnMobSkillTarget(CBattleEntity* PTarget, CBaseEntity* PMob, CMobSkill* PMobSkill) {
+        lua_prepscript("scripts/zones/%s/mobs/%s.lua", PMob->loc.zone->GetName(), PMob->GetName());
+
+        if (!prepFile(File, "onMobSkillTarget")) {
+            CLuaBaseEntity LuaBaseEntity(PTarget);
+            Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntity);
+
+            CLuaBaseEntity LuaMobEntity(PMob);
+            Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaMobEntity);
+
+            CLuaMobSkill LuaMobSkill(PMobSkill);
+            Lunar<CLuaMobSkill>::push(LuaHandle, &LuaMobSkill);
+
+            if (lua_pcall(LuaHandle, 3, 1, 0)) {
+                ShowError("luautils::onMobSkillTarget: %s\n", lua_tostring(LuaHandle, -1));
+                lua_pop(LuaHandle, 1);
+
+                return PTarget;
+            }
+
+            if (lua_isnil(LuaHandle, -1) || lua_isuserdata(LuaHandle, -1)) {
+                CLuaBaseEntity* PEntity = Lunar<CLuaBaseEntity>::check(LuaHandle, -1);
+                TPZ_DEBUG_BREAK_IF(PEntity->GetBaseEntity()->objtype == TYPE_NPC);
+
+                return PEntity->GetBaseEntity() ? (CBattleEntity*)PEntity->GetBaseEntity() : PTarget;
+            }
+
+            lua_pop(LuaHandle, 1);
+        }
+
+        return PTarget;
+    }
+
 }; // namespace luautils

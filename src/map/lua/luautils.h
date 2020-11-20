@@ -291,6 +291,9 @@ namespace luautils
     void OnFurnitureRemoved(CCharEntity* PChar, CItemFurnishing* itemId);
 
     void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID);
+
+    CBattleEntity* OnMobSkillTarget(CBattleEntity* PTarget, CBaseEntity* PMob, CMobSkill* PMobSkill); // triggers before mob weapon skill is used providing the initial target and supports changing the target
+
 };
 
 #endif //- _LUAUTILS_H -

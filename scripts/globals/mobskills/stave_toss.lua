@@ -1,15 +1,18 @@
 ---------------------------------------------
+-- Stave Toss
 --
--- Stave Toss (staff wielding Mamool Ja only!)
---
+-- Description: Ranged attack with the equipped weapon, which is lost.
+-- Type: Ranged
+-- Utsusemi/Blink absorb: 1 shadow
+-- Range: 7.0
+-- Notes: Only used by staff wielding Mamool Ja
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    -- If animationSub is 1, mob has already lost the staff. If zero, still has staff.
-    if mob:AnimationSub() == 1 then
+    if mob:AnimationSub() == 1  and mob:getMainJob() < tpz.job.WHM and mob:getMainJob() > tpz.job.BLM then
         return 1
     else
         return 0
@@ -23,7 +26,9 @@ function onMobWeaponSkill(target, mob, skill)
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
 
-    mob:AnimationSub(1) -- Mob loses Staff on using Stave Toss
+    mob:AnimationSub(1)
+
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
+
     return dmg
 end
