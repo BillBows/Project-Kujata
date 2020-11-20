@@ -283,7 +283,6 @@ tpz.assault.instance.afterInstanceRegister = function(player)
 
     player:messageSpecial(zones[player:getZoneID()].text.ASSAULT_START_OFFSET + assaultID, assaultID)
     player:messageSpecial(zones[player:getZoneID()].text.TIME_TO_COMPLETE, instance:getTimeLimit())
-    player:addTempItem(info.instance[assaultID].FIREFLY)
 
     if player:getCharVar("Assault_Armband") == 1 then
         local cap = instance:getLevelCap()
@@ -355,4 +354,19 @@ tpz.assault.instance.onEventFinish = function(player, csid, finishCs)
             char:setPos(0, 0, 0, 0, info.instance[char:getCurrentAssault()].DESTINY)
         end
     end
+end
+
+-- ------------------------------------------------------------------------------------------------
+-- Zone
+
+tpz.assault.zone.onInstanceZoneIn = function(player, instance)
+    local pos = player:getPos()
+
+    if pos.x == 0 and pos.y == 0 and pos.z == 0 then
+        local entry = instance:getEntryPos()
+
+        player:setPos(entry.x, entry.y, entry.z, entry.rot)
+    end
+    
+    player:addTempItem(info.instance[player:getCurrentAssault()].FIREFLY)
 end

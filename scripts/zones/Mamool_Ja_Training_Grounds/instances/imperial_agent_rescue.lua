@@ -5,6 +5,7 @@
 -- Rescue him before he is interrogated for Imperial secrets.
 -----------------------------------
 local ID = require("scripts/zones/Mamool_Ja_Training_Grounds/IDs")
+require("scripts/globals/assault")
 require("scripts/globals/instance")
 -----------------------------------
 
