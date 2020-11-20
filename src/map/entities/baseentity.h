@@ -232,8 +232,6 @@ public:
     void            SetModelId(uint16 modelId);     // Set new modelid
     uint16          GetModelId();                   // Get the modelid
 
-    bool            IsTargetable();     // checks if entity is targetable
-
     virtual void    HandleErrorMessage(std::unique_ptr<CBasicPacket>&) {};
 
     uint32          id;                 // глобальный идентификатор, уникальный на сервере
