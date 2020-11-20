@@ -3,6 +3,11 @@
 -- Assault
 --
 ---------------------------------------
+require("scripts/globals/keyitems")
+require("scripts/globals/missions")
+require("scripts/globals/quests")
+require("scripts/globals/zones")
+---------------------------------------
 tpz = tpz or {}
 tpz.assault = tpz.assault or {}
 ---------------------------------------
@@ -62,3 +67,73 @@ tpz.assault.missions =
     NYZUL_ISLE_INVESTIGATION          = 51,
     NYZUL_ISLE_UNCHARTED_AREA_SURVEY  = 52,
 }
+
+tpz.assault.info =
+{
+    [tpz.zone.BHAFLAU_THICKETS] =
+    {
+        BEGINNINGS = tpz.keyItem.BRAND_OF_THE_SKYSERPENT,
+        ORDERS = tpz.keyItem.MAMOOL_JA_ASSAULT_ORDERS
+    }
+}
+
+local info = tpz.assault.info
+
+-- ------------------------------------------------------------------------------------------------
+-- Stagging Point Sentries (aka Armband NPCs)
+
+tpz.assault.armband = {}
+
+tpz.assault.armband.onTrigger = function(player, npc, csid1, csid2, csid3, csid4, csid5, csid6, csid7)
+    local mission = player:getCurrentMission(TOAU)
+
+    -- ToAU 02 - Immortal Sentries
+    if mission == tpz.mission.id.toau.IMMORTAL_SENTRIES then
+        if player:hasKeyItem(tpz.keyItem.SUPPLIES_PACKAGE) then
+            player:startEvent(csid1)
+        elseif player:getCharVar("AhtUrganStatus") == 1 then
+            player:startEvent(csid2)
+        end
+
+    -- ToAU Quest - BEGINNINGS (BLU AF1)
+    elseif player:getQuestStatus(AHT_URHGAN, tpz.quest.id.ahtUrhgan.BEGINNINGS) == QUEST_ACCEPTED then
+        if not player:hasKeyItem(info[player:getZoneID()].BEGINNINGS) then
+            player:startEvent(csid3)
+        else
+            player:startEvent(csid4)
+        end
+
+    -- Assault
+    elseif mission >= tpz.mission.id.toau.PRESIDENT_SALAHEEM then
+        if
+            player:getCharVar("assaultEntered") == 0 and
+            player:hasKeyItem(info[player:getZoneID()].ORDERS) and
+            not player:hasKeyItem(tpz.keyItem.ASSAULT_ARMBAND)
+        then
+            player:startEvent(csid5, 50, player:getCurrency("imperial_standing"))
+        else
+            player:startEvent(csid6)
+        end
+
+    -- Default dialogue
+    else
+        player:startEvent(csid7)
+    end
+end
+
+tpz.assault.armband.onEventFinish = function(player, csid, option, csid1, csid2, csid3)
+    -- ToAU 02 - Immortal Sentries
+    if csid == csid1 and option == 1 then
+        player:delKeyItem(tpz.keyItem.SUPPLIES_PACKAGE)
+        player:setCharVar("AhtUrganStatus", 1)
+
+    -- ToAU Quest - BEGINNINGS (BLU AF1)
+    elseif csid == csid2 then
+        npcUtil.giveKeyItem(player, info[player:getZoneID()].BEGINNINGS)
+
+    -- Assault
+    elseif csid == csid3 and option == 1 then
+        npcUtil.giveKeyItem(player, tpz.keyItem.ASSAULT_ARMBAND)
+        player:delCurrency("imperial_standing", 50)
+    end
+end
