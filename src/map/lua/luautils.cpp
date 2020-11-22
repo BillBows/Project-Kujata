@@ -4633,7 +4633,7 @@ namespace luautils
                 return PTarget;
             }
 
-            if (lua_isnil(LuaHandle, -1) || lua_isuserdata(LuaHandle, -1)) {
+            if (!lua_isnil(LuaHandle, -1) && lua_isuserdata(LuaHandle, -1)) {
                 CLuaBaseEntity* PEntity = Lunar<CLuaBaseEntity>::check(LuaHandle, -1);
                 TPZ_DEBUG_BREAK_IF(PEntity->GetBaseEntity()->objtype == TYPE_NPC);
 

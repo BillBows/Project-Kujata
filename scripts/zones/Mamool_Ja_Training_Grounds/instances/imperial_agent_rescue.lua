@@ -20,7 +20,7 @@ function afterInstanceRegister(player)
 end
 
 function onInstanceCreated(instance)
-    tpz.assault.instance.onInstanceCreated(instance, npcs)
+    tpz.assault.instance.onInstanceCreated(instance, npcs, ID.mob)
 
     instance:setProgress(math.random(ID.npc.POT_HATCH, ID.npc.POT_HATCH + 2))
 end

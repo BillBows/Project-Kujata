@@ -251,7 +251,7 @@ tpz.assault.runicSeal.onInstanceCreated = function(player, target, instance, csi
         local party = player:getParty()
 
         if party then
-            for _,member in ipairs(party) do
+            for _, member in ipairs(party) do
                 if
                     member:getID() ~= player:getID() and
                     member:getZoneID() == player:getZoneID()
@@ -273,36 +273,9 @@ end
 
 tpz.assault.instance = {}
 
-tpz.assault.instance.afterInstanceRegister = function(player)
-    local instance = player:getInstance()
-    local assaultID = player:getCurrentAssault()
 
-    for _, mob in pairs(zones[player:getZoneID()].mob[assaultID].MOBS_START) do
-        SpawnMob(mob, instance)
-    end
-
-    player:messageSpecial(zones[player:getZoneID()].text.ASSAULT_START_OFFSET + assaultID, assaultID)
-    player:messageSpecial(zones[player:getZoneID()].text.TIME_TO_COMPLETE, instance:getTimeLimit())
-
-    if player:getCharVar("Assault_Armband") == 1 then
-        local cap = instance:getLevelCap()
-
-        if cap ~= 0 then
-            if     cap == 70 then cap = 5
-            elseif cap == 60 then cap = 15
-            elseif cap == 50 then cap = 25
-            end
-
-            for _, mob in pairs(zones[player:getZoneID()].mob[assaultID].MOBS_START) do
-                local entity = instance:getEntity(bit.band(mob, 0xFFF), tpz.objType.MOB)
-
-                entity:setMobLevel(entity:getMainLvl() - cap)
-            end
-        end
-    end
-end
-
-tpz.assault.instance.onInstanceCreated = function(instance, npcs)
+-- Instance setup
+tpz.assault.instance.onInstanceCreated = function(instance, npcs, mobs)
     if npcs then
         for id, pos in pairs(npcs) do
             local entity = instance:getEntity(bit.band(id, 0xFFF), tpz.objType.NPC)
@@ -310,6 +283,37 @@ tpz.assault.instance.onInstanceCreated = function(instance, npcs)
             entity:setPos(pos.x, pos.y, pos.z, pos.rot)
         end
     end
+
+    for _, mob in pairs(mobs[instance:getID()].START) do
+        SpawnMob(mob, instance)
+    end
+
+    local cap = instance:getLevelCap()
+
+    if cap ~= 0 then
+        if     cap == 70 then cap = 5
+        elseif cap == 60 then cap = 15
+        elseif cap == 50 then cap = 25
+        end
+
+        for _, mob in pairs(instance:getMobs()) do
+            mob:setMobLevel(mob:getMainLvl() - cap)
+        end
+    end
+end
+
+-- Character is registered and zoned into an instance for the first time
+tpz.assault.instance.afterInstanceRegister = function(player)
+    local instance = player:getInstance()
+    local cap = instance:getLevelCap()
+    local limit = instance:getTimeLimit()
+    local assaultID = player:getCurrentAssault()
+
+    player:addTempItem(info.instance[player:getCurrentAssault()].FIREFLY)
+    player:addStatusEffect(tpz.effect.LEVEL_RESTRICTION, cap, 0, 0)
+
+    player:messageSpecial(zones[player:getZoneID()].text.ASSAULT_START_OFFSET + assaultID, assaultID)
+    player:messageSpecial(zones[player:getZoneID()].text.TIME_TO_COMPLETE, limit)
 end
 
 tpz.assault.instance.onInstanceFailure = function(instance, csid)
@@ -330,18 +334,18 @@ tpz.assault.instance.onInstanceFailure = function(instance, csid)
 end
 
 tpz.assault.instance.onInstanceComplete = function(instance, X, Z, npcs)
-    local chars = instance:getChars()
-
-    for _, char in pairs(chars) do
-        char:messageSpecial(zones[char:getZoneID()].text.RUNE_UNLOCKED_POS, X, Z)
-    end
-
     if npcs then
         for id, pos in pairs(npcs) do
             local entity = instance:getEntity(bit.band(id, 0xFFF), tpz.objType.NPC)
 
             entity:setStatus(tpz.status.NORMAL)
         end
+    end
+
+    local chars = instance:getChars()
+
+    for _, char in pairs(chars) do
+        char:messageSpecial(zones[char:getZoneID()].text.RUNE_UNLOCKED_POS, X, Z)
     end
 end
 
@@ -369,6 +373,4 @@ tpz.assault.zone.onInstanceZoneIn = function(player, instance)
 
         player:setPos(entry.x, entry.y, entry.z, entry.rot)
     end
-    
-    player:addTempItem(info.instance[player:getCurrentAssault()].FIREFLY)
 end

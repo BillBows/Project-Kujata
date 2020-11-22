@@ -31,7 +31,7 @@ zones[tpz.zone.MAMOOL_JA_TRAINING_GROUNDS] =
     {
         [tpz.assault.missions.IMPERIAL_AGENT_RESCUE] =
         {
-            MOBS_START =
+            START =
             {
                 17047553,
                 17047554,
@@ -47,6 +47,9 @@ zones[tpz.zone.MAMOOL_JA_TRAINING_GROUNDS] =
                 17047564,
                 17047565,
                 17047566,
+                17047567,
+                17047568,
+                17047569,
             },
             GATES      =
             {

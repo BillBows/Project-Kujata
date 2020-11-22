@@ -14,6 +14,8 @@ function onMobSpawn(mob)
 
     if mob:getMainJob() == tpz.job.NIN then
         mob:setLocalVar("BreakChance", 0) -- Nin mobs dont have a weapon to break
+
+	    mob:setMobMod(tpz.mobMod.NO_STANDBACK, 1)
     end
 end
 

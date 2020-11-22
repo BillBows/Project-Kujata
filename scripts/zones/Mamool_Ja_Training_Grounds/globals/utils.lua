@@ -6,6 +6,7 @@ require("scripts/globals/status")
 -----------------------------------
 
 local utils = {}
+-- Imperial Agent Rescue
 
 utils.updateSkillTarget = function(target, mob, skill)
     local skillId = skill:getID()
@@ -31,5 +32,40 @@ utils.updateSkillTarget = function(target, mob, skill)
 
     return target
 end
+
+function utils.openPotHatch(player, npc, posX, posZ, posR)    
+    local instance = npc:getInstance()
+
+    npc:setAnimation(8)
+
+    if npc:getID() == instance:getProgress() then
+        instance:setProgress(0)
+
+        local brujeel = instance:getEntity(bit.band(ID.npc.brujeel, 0xFFF), tpz.objType.NPC)
+        local chars = instance:getChars()
+
+        for _,v in pairs(chars) do
+            npc:timer(2000, function(npc) brujeel:setPos(posX, -1, posZ, posR)
+
+            brujeel:setStatus(tpz.status.NORMAL) brujeel:entityAnimationPacket("deru") end)
+
+            npc:timer(4000, function(npc) brujeel:setAnimation(0) end)
+
+            player:timer(7000, function(player) v:showText(brujeel, ID.text.BRUJEEL_TEXT) end)
+            player:timer(10000, function(player) v:showText(brujeel, ID.text.BRUJEEL_TEXT + 1) end)
+            player:timer(12000, function(player) v:showText(brujeel, ID.text.BRUJEEL_TEXT + 2) end)
+            player:timer(14000, function(player) v:showText(brujeel, ID.text.BRUJEEL_TEXT + 3) end)
+            player:timer(16000, function(player) v:showText(brujeel, ID.text.BRUJEEL_TEXT + 4) end)
+            player:timer(18000, function(player) v:showText(brujeel, ID.text.BRUJEEL_TEXT + 5) end)
+
+            npc:timer(20000, function(npc) brujeel:entityAnimationPacket("cabk") end)
+            npc:timer(22000, function(npc) brujeel:entityAnimationPacket("shbk") end)
+            npc:timer(23000, function(npc) brujeel:entityAnimationPacket("kesu") end)
+            npc:timer(24500, function(npc) brujeel:setStatus(tpz.status.DISAPPEAR) end)
+
+            npc:timer(26000, function(npc) instance:complete() end)
+        end
+    end
+end 
 
 return utils
