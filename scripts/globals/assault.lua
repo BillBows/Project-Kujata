@@ -68,63 +68,83 @@ tpz.assault.missions =
     NYZUL_ISLE_UNCHARTED_AREA_SURVEY  = 52,
 }
 
+tpz.assault.index =
+{
+    LEUJAOAM   = 0,
+    MAMOOL_JA  = 1,
+    LEBROS     = 2,
+    PERIQIA    = 3,
+    ILRUSI     = 4,
+    NYZUL_ISLE = 5,
+}
+
 tpz.assault.currency =
 {
-    LEUJAOAM_ASSAULT_POINT = 0,
-    MAMOOL_ASSAULT_POINT = 1,
-    LEBROS_ASSAULT_POINT = 2,
-    PERIQIA_ASSAULT_POINT = 3,
-    ILRUSI_ASSAULT_POINT = 4,
-    NYZUL_ISLE_ASSAULT_POINT = 5
+    LEUJAOAM_ASSAULT_POINT   = tpz.assault.index.LEUJAOAM,
+    MAMOOL_ASSAULT_POINT     = tpz.assault.index.MAMOOL_JA,
+    LEBROS_ASSAULT_POINT     = tpz.assault.index.LEBROS,
+    PERIQIA_ASSAULT_POINT    = tpz.assault.index.PERIQIA,
+    ILRUSI_ASSAULT_POINT     = tpz.assault.index.ILRUSI,
+    NYZUL_ISLE_ASSAULT_POINT = tpz.assault.index.NYZUL_ISLE,
 }
 
 tpz.assault.orders =
 {
-    [0] = {index = 120, ki = tpz.keyItem.LEUJAOAM_ASSAULT_ORDERS,   tele = 0x02, valid =  2, event = 120},
-    [1] = {index = 122, ki = tpz.keyItem.MAMOOL_JA_ASSAULT_ORDERS,  tele = 0x08, valid =  8, event = 121},
-    [2] = {index = 123, ki = tpz.keyItem.LEBROS_ASSAULT_ORDERS,     tele = 0x16, valid = 16, event = 122},
-    [3] = {index = 121, ki = tpz.keyItem.PERIQIA_ASSAULT_ORDERS,    tele = 0x04, valid =  4, event = 123},
-    [4] = {index = 124, ki = tpz.keyItem.ILRUSI_ASSAULT_ORDERS,     tele = 0x32, valid = 32, event = 124},
-    [5] = {index = 125, ki = tpz.keyItem.NYZUL_ISLE_ASSAULT_ORDERS, tele = 0x64, valid = 64, event = 125},
+    [tpz.assault.index.LEUJAOAM]   = {ki = tpz.keyItem.LEUJAOAM_ASSAULT_ORDERS,   index = 120, tele = 0x02, valid =  2, event = 120},
+    [tpz.assault.index.MAMOOL_JA]  = {ki = tpz.keyItem.MAMOOL_JA_ASSAULT_ORDERS,  index = 122, tele = 0x08, valid =  8, event = 121},
+    [tpz.assault.index.LEBROS]     = {ki = tpz.keyItem.LEBROS_ASSAULT_ORDERS,     index = 123, tele = 0x16, valid = 16, event = 122},
+    [tpz.assault.index.PERIQIA]    = {ki = tpz.keyItem.PERIQIA_ASSAULT_ORDERS,    index = 121, tele = 0x04, valid =  4, event = 123},
+    [tpz.assault.index.ILRUSI]     = {ki = tpz.keyItem.ILRUSI_ASSAULT_ORDERS,     index = 124, tele = 0x32, valid = 32, event = 124},
+    [tpz.assault.index.NYZUL_ISLE] = {ki = tpz.keyItem.NYZUL_ISLE_ASSAULT_ORDERS, index = 125, tele = 0x64, valid = 64, event = 125},
 }
 
 tpz.assault.badges =
 {
-    tpz.keyItem.PSC_WILDCAT_BADGE,
-    tpz.keyItem.PFC_WILDCAT_BADGE,
-    tpz.keyItem.SP_WILDCAT_BADGE,
-    tpz.keyItem.LC_WILDCAT_BADGE,
-    tpz.keyItem.C_WILDCAT_BADGE,
-    tpz.keyItem.S_WILDCAT_BADGE,
-    tpz.keyItem.SM_WILDCAT_BADGE,
-    tpz.keyItem.CS_WILDCAT_BADGE,
-    tpz.keyItem.SL_WILDCAT_BADGE,
-    tpz.keyItem.FL_WILDCAT_BADGE,
-    tpz.keyItem.CAPTAIN_WILDCAT_BADGE,
+    [ 1] = tpz.keyItem.PSC_WILDCAT_BADGE,
+    [ 2] = tpz.keyItem.PFC_WILDCAT_BADGE,
+    [ 3] = tpz.keyItem.SP_WILDCAT_BADGE,
+    [ 4] = tpz.keyItem.LC_WILDCAT_BADGE,
+    [ 5] = tpz.keyItem.C_WILDCAT_BADGE,
+    [ 6] = tpz.keyItem.S_WILDCAT_BADGE,
+    [ 7] = tpz.keyItem.SM_WILDCAT_BADGE,
+    [ 8] = tpz.keyItem.CS_WILDCAT_BADGE,
+    [ 9] = tpz.keyItem.SL_WILDCAT_BADGE,
+    [10] = tpz.keyItem.FL_WILDCAT_BADGE,
+    [11] = tpz.keyItem.CAPTAIN_WILDCAT_BADGE,
+}
+
+tpz.assault.stock =
+{
+    [tpz.assault.index.MAMOOL_JA] =
+    {
+        [ 1] = {id = 15971, price =  3000}, -- Antivenom Earring
+        [ 2] = {id = 15776, price =  5000}, -- Ebullient Ring 
+        [ 3] = {id = 15522, price =  8000}, -- Enlightened Chain 
+        [ 4] = {id = 15885, price = 10000}, -- Spectral Belt
+        [ 5] = {id = 15491, price = 10000}, -- Bullseye Cape
+        [ 6] = {id = 17715, price = 15000}, -- Storm Tulwar
+        [ 7] = {id = 18113, price = 15000}, -- Imperial Neza
+        [ 8] = {id = 17951, price = 15000}, -- Storm Tabar
+        [ 9] = {id = 14935, price = 20000}, -- Yigit Gages
+        [10] = {id = 15688, price = 20000}, -- Amir Boots
+        [11] = {id = 15609, price = 20000}, -- Pahluwan Seraweels
+    }
+}
+
+tpz.assault.destiny =
+{
+    [tpz.zone.BHAFLAU_THICKETS]           = tpz.zone.MAMOOL_JA_TRAINING_GROUNDS,
+    [tpz.zone.MAMOOL_JA_TRAINING_GROUNDS] = tpz.zone.BHAFLAU_THICKETS,
+}
+
+tpz.assault.firefly =
+{
+    [tpz.zone.MAMOOL_JA_TRAINING_GROUNDS] = 5344, -- Bhaflau Fireflies
 }
 
 tpz.assault.info =
 {
-    entrance = 
-    {
-        [tpz.zone.BHAFLAU_THICKETS] =
-        {
-            BEGINNINGS = tpz.keyItem.BRAND_OF_THE_SKYSERPENT,
-            ORDERS = tpz.keyItem.MAMOOL_JA_ASSAULT_ORDERS,
-            DESTINY = tpz.zone.MAMOOL_JA_TRAINING_GROUNDS
-        }
-    },
-    instance =
-    {
-        [tpz.assault.missions.IMPERIAL_AGENT_RESCUE] =
-        {
-            LEVEL = 60,
-            POINTS = 1100,
-            FIREFLY = 5344,
-            DESTINY = tpz.zone.BHAFLAU_THICKETS,
-            CURRENCY = tpz.assault.currency.MAMOOL_ASSAULT_POINT
-        }
-    }
+    [tpz.assault.missions.IMPERIAL_AGENT_RESCUE] = {level = 60, points = 1100},
 }
 
 local info = tpz.assault.info
@@ -195,11 +215,11 @@ tpz.assault.runicSeal = {}
 
 tpz.assault.runicSeal.onTrigger = function(player, npc, csid, index)
     if
-        player:hasKeyItem(info.entrance[player:getZoneID()].ORDERS) and
+        player:hasKeyItem(tpz.assault.orders[index].ki) and
         player:getCharVar("[assault]entered") == 0
     then
         local assaultID = player:getCurrentAssault()
-        local level = info.instance[assaultID].LEVEL
+        local level = info[assaultID].level
         local armband = 0
 
         if player:hasKeyItem(tpz.keyItem.ASSAULT_ARMBAND) then
@@ -212,7 +232,7 @@ tpz.assault.runicSeal.onTrigger = function(player, npc, csid, index)
     end
 end
 
-tpz.assault.runicSeal.onEventUpdate = function(player, csid, option, target)
+tpz.assault.runicSeal.onEventUpdate = function(player, csid, option, target, index)
     if player:getGMLevel() == 0 and player:getPartySize() < 3 then
         player:messageSpecial(zones[player:getZoneID()].text.PARTY_MIN_REQS, 3)
         player:instanceEntry(target, 1)
@@ -242,7 +262,7 @@ tpz.assault.runicSeal.onEventUpdate = function(player, csid, option, target)
     if party then
         for _, member in ipairs(party) do
             if
-                not member:hasKeyItem(info.entrance[player:getZoneID()].ORDERS) or
+                not member:hasKeyItem(tpz.assault.orders[index].ki) or
                 member:getCurrentAssault() ~= assaultID or
                 member:getCharVar("[assault]entered") ~= 0 or
                 member:getMainLvl() < 50
@@ -263,12 +283,12 @@ tpz.assault.runicSeal.onEventUpdate = function(player, csid, option, target)
         end
     end
 
-    player:createInstance(assaultID, info.entrance[player:getZoneID()].DESTINY)
+    player:createInstance(assaultID, tpz.assault.destiny[player:getZoneID()])
 end
 
 tpz.assault.runicSeal.onEventFinish = function(player, csid, option, assaultCs, assaultOpt)
     if csid == assaultCs and option == assaultOpt then
-        player:setPos(0, 0, 0, 0, info.entrance[player:getZoneID()].DESTINY)
+        player:setPos(0, 0, 0, 0, tpz.assault.destiny[player:getZoneID()])
     end
 end
 
@@ -277,8 +297,8 @@ tpz.assault.runicSeal.onInstanceCreated = function(player, target, instance, csi
         instance:setLevelCap(player:getCharVar("[assault]cap"))
         player:setCharVar("[assault]cap", 0)
 
-        local id = instance:getID()
-        player:setCharVar("[assault]entered", id)
+        local instanceId = instance:getID()
+        player:setCharVar("[assault]entered", instanceId)
         player:setInstance(instance)
         player:instanceEntry(target, 4)
 
@@ -293,7 +313,7 @@ tpz.assault.runicSeal.onInstanceCreated = function(player, target, instance, csi
                     member:getID() ~= player:getID() and
                     member:getZoneID() == player:getZoneID()
                 then
-                    member:setCharVar("[assault]entered", id)
+                    member:setCharVar("[assault]entered", instanceId)
                     member:setInstance(instance)
                     member:startEvent(csid)
                 end
@@ -345,9 +365,8 @@ tpz.assault.instance.afterInstanceRegister = function(player)
     local limit = instance:getTimeLimit()
     local assaultID = player:getCurrentAssault()
 
-    player:addTempItem(info.instance[player:getCurrentAssault()].FIREFLY)
+    player:addTempItem(tpz.assault.firefly[player:getZoneID()])
     player:addStatusEffect(tpz.effect.LEVEL_RESTRICTION, cap, 0, 0)
-
     player:messageSpecial(zones[player:getZoneID()].text.ASSAULT_START_OFFSET + assaultID, assaultID)
     player:messageSpecial(zones[player:getZoneID()].text.TIME_TO_COMPLETE, limit)
 end
@@ -391,7 +410,7 @@ tpz.assault.instance.onEventFinish = function(player, csid, finishCs)
         local chars = instance:getChars()
 
         for _, char in pairs(chars) do
-            char:setPos(0, 0, 0, 0, info.instance[char:getCurrentAssault()].DESTINY)
+            char:setPos(0, 0, 0, 0, tpz.assault.destiny[char:getZoneID()])
         end
     end
 end
@@ -416,11 +435,11 @@ end
 
 tpz.assault.runeRelease = {}
 
-tpz.assault.runeRelease.onTrigger = function(player, npc, csid)
+tpz.assault.runeRelease.onTrigger = function(player, npc, csid, param)
     local instance = player:getInstance()
 
     if instance:completed() then
-        player:startEvent(csid, info.instance[player:getCurrentAssault()].CURRENCY)
+        player:startEvent(csid, param)
     end
 end
 
@@ -438,7 +457,7 @@ tpz.assault.runeRelease.onEventFinish = function(player, csid, option, exitCs, f
         
         for _, char in pairs(chars) do
             local assaultID = char:getCurrentAssault()
-            local base = info.instance[assaultID].POINTS
+            local base = info[assaultID].points
     
             local points = base - (base * penalty)
             local promotion = 1
@@ -468,7 +487,50 @@ tpz.assault.runeRelease.onEventFinish = function(player, csid, option, exitCs, f
         local chars = instance:getChars()
 
         for _, char in pairs(chars) do
-            char:setPos(0, 0, 0, 0, info.instance[char:getCurrentAssault()].DESTINY)
+            char:setPos(0, 0, 0, 0, tpz.assault.destiny[char:getZoneID()])
+        end
+    end
+end
+
+-- ------------------------------------------------------------------------------------------------
+-- Counters
+
+tpz.assault.counter = {}
+
+tpz.assault.counter.onTrigger = function(player, csid1, csid2, index)
+    local rank = tpz.assault.utils.getMercenaryRank(player)
+
+    if rank > 0 then
+        local hasImperialTag = 0
+
+        if player:hasKeyItem(tpz.ki.IMPERIAL_ARMY_ID_TAG) then
+            hasImperialTag = 1
+        else
+
+        local points = player:getAssaultPoint(index)
+        local assaultID = player:getCurrentAssault()
+
+        player:startEvent(csid1, rank, hasImperialTag, points, assaultID)
+    else
+        player:startEvent(csid2)
+    end
+end
+
+tpz.assault.counter.onEventFinish = function(player, csid, option, menuCs, index)
+    if csid == menuCs then
+        local selection = bit.band(option, 0xF)
+
+        if selection == 1 then -- Taking assault mission
+            player:addAssault(bit.rshift(option, 4))
+            player:delKeyItem(tpz.ki.IMPERIAL_ARMY_ID_TAG)
+            npcUtil.giveKeyItem(player, tpz.assault.orders[index].ki)
+        elseif selection == 2 then -- Purchasing an item
+            local item = bit.rshift(option, 14)
+            local choice = tpz.assault.stock[index][item]
+
+            if choice and npcUtil.giveItem(player, choice.id) then
+                player:delAssaultPoint(index, choice.price)
+            end
         end
     end
 end
@@ -499,7 +561,7 @@ end
 tpz.assault.utils.getMercenaryRank = function(player)
     local rank = 0
 
-    for _, badge in pairs(tpz.assault.badges) do
+    for _, badge in ipairs(tpz.assault.badges) do
         if player:hasKeyItem(badge) then
             rank = rank + 1
         end

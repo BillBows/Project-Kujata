@@ -7,11 +7,11 @@ require("scripts/globals/assault")
 -----------------------------------
 
 function onTrigger(player, npc)
-    tpz.assault.runicSeal.onTrigger(player, npc, 505, 1)
+    tpz.assault.runicSeal.onTrigger(player, npc, 505, tpz.assault.index.MAMOOL_JA)
 end
 
 function onEventUpdate(player, csid, option, target)
-    tpz.assault.runicSeal.onEventUpdate(player, csid, option, target)
+    tpz.assault.runicSeal.onEventUpdate(player, csid, option, target, tpz.assault.index.MAMOOL_JA)
 end
 
 function onEventFinish(player, csid, option, target)

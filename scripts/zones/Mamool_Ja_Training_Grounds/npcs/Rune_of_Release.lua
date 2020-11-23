@@ -7,7 +7,7 @@ require("scripts/globals/zone")
 -----------------------------------
 
 function onTrigger(player,npc)
-    tpz.assault.runeRelease.onTrigger(player, npc, 100)
+    tpz.assault.runeRelease.onTrigger(player, npc, 100, tpz.assault.index.MAMOOL_JA)
 end
 
 function onEventUpdate(player, csid, option)
