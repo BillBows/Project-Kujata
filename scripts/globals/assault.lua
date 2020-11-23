@@ -78,6 +78,16 @@ tpz.assault.currency =
     NYZUL_ISLE_ASSAULT_POINT = 5
 }
 
+tpz.assault.orders =
+{
+    [0] = {index = 120, ki = tpz.keyItem.LEUJAOAM_ASSAULT_ORDERS,   tele = 0x02, valid =  2, event = 120},
+    [1] = {index = 122, ki = tpz.keyItem.MAMOOL_JA_ASSAULT_ORDERS,  tele = 0x08, valid =  8, event = 121},
+    [2] = {index = 123, ki = tpz.keyItem.LEBROS_ASSAULT_ORDERS,     tele = 0x16, valid = 16, event = 122},
+    [3] = {index = 121, ki = tpz.keyItem.PERIQIA_ASSAULT_ORDERS,    tele = 0x04, valid =  4, event = 123},
+    [4] = {index = 124, ki = tpz.keyItem.ILRUSI_ASSAULT_ORDERS,     tele = 0x32, valid = 32, event = 124},
+    [5] = {index = 125, ki = tpz.keyItem.NYZUL_ISLE_ASSAULT_ORDERS, tele = 0x64, valid = 64, event = 125},
+}
+
 tpz.assault.info =
 {
     entrance = 
@@ -444,6 +454,29 @@ tpz.assault.runeRelease.onEventFinish = function(player, csid, option, exitCs, f
 
         for _, char in pairs(chars) do
             char:setPos(0, 0, 0, 0, info.instance[char:getCurrentAssault()].DESTINY)
+        end
+    end
+end
+
+-- ------------------------------------------------------------------------------------------------
+-- Utils
+
+tpz.assault.utils = {}
+
+tpz.assault.utils.hasOrders = function(player)
+    for _, order in ipairs(tpz.assault.orders) do
+        if player:hasKeyItem(order.ki) then
+            return true
+        end
+    end
+
+    return false
+end
+
+tpz.assault.utils.clearOrders = function(player)
+    for _, order in ipairs(tpz.assault.orders)
+        if player:hasKeyItem(order.ki) then
+            player:delKeyItem(order.ki)
         end
     end
 end
