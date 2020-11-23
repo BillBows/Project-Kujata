@@ -47,6 +47,7 @@ end
 
 function onEventFinish(player, csid, option)
     local offset = nil
+
     if csid == 101 then
         if option >= 101 and option <= 106 then
             offset = option - 101

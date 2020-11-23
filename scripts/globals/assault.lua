@@ -88,7 +88,7 @@ tpz.assault.orders =
     [5] = {index = 125, ki = tpz.keyItem.NYZUL_ISLE_ASSAULT_ORDERS, tele = 0x64, valid = 64, event = 125},
 }
 
-tpz.rank.badges =
+tpz.assault.badges =
 {
     tpz.keyItem.PSC_WILDCAT_BADGE,
     tpz.keyItem.PFC_WILDCAT_BADGE,
@@ -489,14 +489,14 @@ tpz.assault.utils.hasOrders = function(player)
 end
 
 tpz.assault.utils.clearOrders = function(player)
-    for _, order in ipairs(tpz.assault.orders)
+    for _, order in ipairs(tpz.assault.orders) do
         if player:hasKeyItem(order.ki) then
             player:delKeyItem(order.ki)
         end
     end
 end
 
-tpz.assault.getMercenaryRank = function(player)
+tpz.assault.utils.getMercenaryRank = function(player)
     local rank = 0
 
     for _, badge in pairs(tpz.assault.badges) do
