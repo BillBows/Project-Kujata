@@ -3,7 +3,7 @@
 -- Npc: Pot Hatch
 -- !pos 267 0 -582
 -----------------------------------
-local utils = require("scripts/zone/Mamool_Ja_Training_Grounds/globals/utils")
+local utils = require("scripts/zones/Mamool_Ja_Training_Grounds/globals/utils")
 -----------------------------------
 
 function onTrigger(player,npc)

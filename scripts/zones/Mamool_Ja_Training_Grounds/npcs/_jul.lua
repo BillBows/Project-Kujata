@@ -3,7 +3,7 @@
 -- Npc: Pot Hatch
 -- !pos 183 0 -581
 -----------------------------------
-local utils = require("scripts/zone/Mamool_Ja_Training_Grounds/globals/utils")
+local utils = require("scripts/zones/Mamool_Ja_Training_Grounds/globals/utils")
 -----------------------------------
 
 function onTrade(player,npc,trade)
