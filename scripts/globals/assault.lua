@@ -68,6 +68,16 @@ tpz.assault.missions =
     NYZUL_ISLE_UNCHARTED_AREA_SURVEY  = 52,
 }
 
+tpz.assault.currency =
+{
+    LEUJAOAM_ASSAULT_POINT = 0,
+    MAMOOL_ASSAULT_POINT = 1,
+    LEBROS_ASSAULT_POINT = 2,
+    PERIQIA_ASSAULT_POINT = 3,
+    ILRUSI_ASSAULT_POINT = 4,
+    NYZUL_ISLE_ASSAULT_POINT = 5
+}
+
 tpz.assault.info =
 {
     entrance = 
@@ -83,10 +93,11 @@ tpz.assault.info =
     {
         [tpz.assault.missions.IMPERIAL_AGENT_RESCUE] =
         {
-            suggestedLevel = 60,
-            minimumPoints = 1100,
+            LEVEL = 60,
+            POINTS = 1100,
             FIREFLY = 5344,
-            DESTINY = tpz.zone.BHAFLAU_THICKETS
+            DESTINY = tpz.zone.BHAFLAU_THICKETS,
+            CURRENCY = tpz.assault.currency.MAMOOL_ASSAULT_POINT
         }
     }
 }
@@ -163,7 +174,7 @@ tpz.assault.runicSeal.onTrigger = function(player, npc, csid, index)
         player:getCharVar("[assault]entered") == 0
     then
         local assaultID = player:getCurrentAssault()
-        local level = info.instance[assaultID].suggestedLevel
+        local level = info.instance[assaultID].LEVEL
         local armband = 0
 
         if player:hasKeyItem(tpz.keyItem.ASSAULT_ARMBAND) then
@@ -241,7 +252,8 @@ tpz.assault.runicSeal.onInstanceCreated = function(player, target, instance, csi
         instance:setLevelCap(player:getCharVar("[assault]cap"))
         player:setCharVar("[assault]cap", 0)
 
-        player:setCharVar("[assault]entered", 99)
+        local id = instance:getID()
+        player:setCharVar("[assault]entered", id)
         player:setInstance(instance)
         player:instanceEntry(target, 4)
 
@@ -256,7 +268,7 @@ tpz.assault.runicSeal.onInstanceCreated = function(player, target, instance, csi
                     member:getID() ~= player:getID() and
                     member:getZoneID() == player:getZoneID()
                 then
-                    member:setCharVar("[assault]entered", 99)
+                    member:setCharVar("[assault]entered", id)
                     member:setInstance(instance)
                     member:startEvent(csid)
                 end
@@ -272,7 +284,6 @@ end
 -- Instance
 
 tpz.assault.instance = {}
-
 
 -- Instance setup
 tpz.assault.instance.onInstanceCreated = function(instance, npcs, mobs)
@@ -372,5 +383,67 @@ tpz.assault.zone.onInstanceZoneIn = function(player, instance)
         local entry = instance:getEntryPos()
 
         player:setPos(entry.x, entry.y, entry.z, entry.rot)
+    end
+end
+
+-- ------------------------------------------------------------------------------------------------
+-- Rune of Release
+
+tpz.assault.runeRelease = {}
+
+tpz.assault.runeRelease.onTrigger = function(player, npc, csid)
+    local instance = player:getInstance()
+
+    if instance:completed() then
+        player:startEvent(csid, info.instance[player:getCurrentAssault()].CURRENCY)
+    end
+end
+
+tpz.assault.runeRelease.onEventFinish = function(player, csid, option, exitCs, finishCs)    
+    if csid == exitCs and option == 1 then
+        local instance = player:getInstance()
+
+        for _, mob in pairs(instance:getMobs()) do
+            local id = mob:getID()
+            DespawnMob(id, instance)
+        end
+        
+        local chars = instance:getChars()
+        local penalty = math.max((#chars - 3) * 0.1, 0)
+        
+        for _, char in pairs(chars) do
+            local assaultID = char:getCurrentAssault()
+            local base = info.instance[assaultID].POINTS
+    
+            local points = base - (base * penalty)
+            local promotion = 1
+    
+            if char:getCharVar("[assault]armband") == 1 then
+                points = points * 1.1
+                char:setCharVar("[assault]armband", 0)
+            end
+    
+            if not char:hasCompletedAssault(assaultID) then
+                points = points * 1.5
+                promotion = 5
+            end
+    
+            points = math.floor(points)
+            char:addAssaultPoint(info.instance[assaultID].CURRENCY, points)
+            char:messageSpecial(zones[char:getZoneID()].text.ASSAULT_POINTS_OBTAINED, points)
+            
+            promotion = math.min(char:getCharVar("[assault]promotion") + promotion, 25)
+            char:setCharVar("[assault]promotion", promotion)
+    
+            char:setCharVar("[assault]complete", 1)
+            char:startEvent(finishCs)
+        end
+    elseif csid == finishCs then
+        local instance = player:getInstance()
+        local chars = instance:getChars()
+
+        for _, char in pairs(chars) do
+            char:setPos(0, 0, 0, 0, info.instance[char:getCurrentAssault()].DESTINY)
+        end
     end
 end
